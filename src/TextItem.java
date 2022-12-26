@@ -35,11 +35,6 @@ public class TextItem extends SlideItem {
 		text = string;
 	}
 
-//An empty textitem
-	public TextItem() {
-		this(0, EMPTYTEXT);
-	}
-
 //Returns the text
 	public String getText() {
 		return text == null ? "" : text;

@@ -20,12 +20,12 @@ import java.io.IOException;
  * @version 1.6 2014/05/16 Sylvia Stuurman
 */
 
-public class BitmapItem extends SlideItem {
+  public class BitmapItem extends SlideItem {
   private BufferedImage bufferedImage;
   private String imageName;
   
-  protected static final String FILE = "File ";
-  protected static final String NOTFOUND = " not found";
+  private static final String FILE = "File ";
+  private static final String NOTFOUND = " not found";
 
 
   	//level indicates the item-level; name indicates the name of the file with the image
@@ -38,11 +38,6 @@ public class BitmapItem extends SlideItem {
 		catch (IOException e) {
 			System.err.println(FILE + imageName + NOTFOUND) ;
 		}
-	}
-
-	//An empty bitmap item
-	public BitmapItem() {
-		this(0, null);
 	}
 
 	//Returns the filename of the image

@@ -11,14 +11,10 @@ import java.awt.image.ImageObserver;
  */
 
 public abstract class SlideItem {
-    private int level = 0; //The level of the SlideItem
+    protected int level = 0; //The level of the SlideItem
 
     public SlideItem(int lev) {
         level = lev;
-    }
-
-    public SlideItem() {
-        this(0);
     }
 
     //Returns the level
