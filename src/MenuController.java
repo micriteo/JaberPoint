@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -117,12 +119,22 @@ public class MenuController extends MenuBar {
         });
         fileMenu.add(menuItem = mkMenuItem(SAVE));
         menuItem.addActionListener(e -> {
+            // Selecting a file
             Accessor xmlAccessor = new XMLAccessor();
-            try {
-                xmlAccessor.saveFile(presentation, SAVEFILE);
-            } catch (IOException exc) {
-                JOptionPane.showMessageDialog(parent, IOEX + exc,
-                        SAVEERR, JOptionPane.ERROR_MESSAGE);
+            // Create a new XMLAccessor
+            String userInput = JOptionPane.showInputDialog(parent, "Name of the File");
+            // Get the name of the file
+            //if the name is not empty
+            if (userInput != null && !userInput.isEmpty()) {
+                try {
+                    // Save the file
+                    xmlAccessor.saveFile(presentation, userInput + ".xml");
+                } catch (IOException exc) {
+                    JOptionPane.showMessageDialog(parent, IOEX + exc,
+                            SAVEERR, JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(parent, "Please enter a name for the file");
             }
         });
         fileMenu.addSeparator();
