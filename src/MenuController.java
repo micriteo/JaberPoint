@@ -40,10 +40,6 @@ public class MenuController extends MenuBar {
     protected static final String PREV = "Prev";
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
-
-    protected static final String TESTFILE = "testPresentation.xml";
-    protected static final String SAVEFILE = "savedPresentation.xml";
-
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
@@ -53,21 +49,6 @@ public class MenuController extends MenuBar {
         this.presentation = presentation;
         MenuItem menuItem;
         Menu fileMenu = new Menu(FILE);
-//		fileMenu.add(menuItem = mkMenuItem(OPEN));
-//		menuItem.addActionListener(actionEvent -> {
-//			presentation.clear();
-//
-//			Accessor xmlAccessor = new XMLAccessor();
-//			try {
-//				xmlAccessor.loadFile(presentation, TESTFILE);
-//				presentation.setSlideNumber(0);
-//			} catch (IOException exc) {
-//				JOptionPane.showMessageDialog(parent, IOEX + exc,
-//				 LOADERR, JOptionPane.ERROR_MESSAGE);
-//			}
-//			parent.repaint();
-//		});
-
         fileMenu.add(menuItem = mkMenuItem(OPEN));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
