@@ -22,8 +22,8 @@ public abstract class Accessor {
 	public Accessor() {
 	}
 
-	abstract public void loadFile(Presentation p, String fn) throws IOException;
+	public abstract void loadFile(Presentation p, String fn) throws IOException;
 
-	abstract public void saveFile(Presentation p, String fn) throws IOException;
+	public  abstract void saveFile(Presentation p, String fn) throws IOException;
 
 }

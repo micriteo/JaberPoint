@@ -18,7 +18,6 @@ import javax.xml.crypto.Data;
 public class SlideViewerComponent extends JComponent implements FontBuilder{
 
     private Slide slide; //The current slide
-    private Font labelFont = null; //The font for labels
     //private Presentation presentation = null; //The presentation
     private JFrame frame = null;
 

@@ -82,7 +82,8 @@ public class Presentation {
 
 	//Remove the presentation
 	void clear() {
-		showList = new ArrayList<Slide>();
+		//Diamond can be excluded
+		showList = new ArrayList<>();
 		setSlideNumber(-1);
 	}
 

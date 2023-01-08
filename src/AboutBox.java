@@ -12,18 +12,21 @@ import javax.swing.JOptionPane;
  */
 
 public class AboutBox {
+	private static final StringBuilder buildText = new StringBuilder();
+
 	public static void show(Frame parent) {
-		JOptionPane.showMessageDialog(parent,
-				"JabberPoint is a primitive slide-show program in Java(tm). It\n" +
-				"is freely copyable as long as you keep this notice and\n" +
-				"the splash screen intact.\n" +
-				"Copyright (c) 1995-1997 by Ian F. Darwin, ian@darwinsys.com.\n" +
-				"Adapted by Gert Florijn (version 1.1) and " +
-				"Sylvia Stuurman (version 1.2 and higher) for the Open" +
-				"University of the Netherlands, 2002 -- now.\n" +
-				"Author's version available from http://www.darwinsys.com/",
-				"About JabberPoint",
-				JOptionPane.INFORMATION_MESSAGE
-		);
+		JOptionPane.showMessageDialog(parent,text(),"About JabberPoint",JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private static String text(){
+			buildText.append("JabberPoint is a primitive slide-show program in Java(tm). It\n")
+			.append("is freely copyable as long as you keep this notice and\n")
+			.append("the splash screen intact.\n")
+			.append("Copyright (c) 1995-1997 by Ian F. Darwin, ian@darwinsys.com.\n")
+			.append("Adapted by Gert Florijn (version 1.1) and ")
+			.append("Sylvia Stuurman (version 1.2 and higher) for the Open")
+			.append("University of the Netherlands, 2002 -- now.\n")
+			.append("Author's version available from http://www.darwinsys.com/");
+			return buildText.toString();
 	}
 }
