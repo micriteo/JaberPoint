@@ -13,7 +13,7 @@ import java.io.IOException;
  * @version 1.3 2004/08/17 Sylvia Stuurman
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.6 2014/05/1 6 Sylvia Stuurman
  */
 
 public class JabberPoint {
@@ -26,14 +26,14 @@ public class JabberPoint {
 		
 		Style.createStyles();
 		Presentation presentation = new Presentation();
-		new SlideViewerFrame(JABVERSION,presentation);
+		SlideViewerFrame slideViewerFrame = new  SlideViewerFrame(JABVERSION,presentation);
 		try {
 			if (argv.length == 0) { //a demo presentation
 				Accessor.getDemoAccessor().loadFile(presentation, "");
 			} else {
 				new XMLAccessor().loadFile(presentation, argv[0]);
 			}
-			presentation.setSlideNumber(0);
+			slideViewerFrame.getSlideViewerComponent().setSlideNumber(0);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,
 					IOERR + ex, JABERR,

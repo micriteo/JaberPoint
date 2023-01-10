@@ -15,15 +15,14 @@ import javax.xml.crypto.Data;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class SlideViewerComponent extends JComponent implements FontBuilder{
+public class SlideViewerComponent extends JComponent implements FontBuilder {
 
     private Slide slide; //The current slide
     //private Presentation presentation = null; //The presentation
     private JFrame frame = null;
 
     private static final long serialVersionUID = 227L;
-    private Presentation presentation;
-
+    private Presentation presentation = null;
     private CustomFont customfont;
     private static final Color BGCOLOR = Color.white;
     private static final int XPOS = 1100;
@@ -45,11 +44,40 @@ public class SlideViewerComponent extends JComponent implements FontBuilder{
             repaint();
             return;
         }
-		this.presentation = presentation;
+        this.presentation = presentation;
         this.slide = data;
         repaint();
-		frame.setTitle(presentation.getTitle());
-	}
+        frame.setTitle(presentation.getTitle());
+    }
+
+    public void setSlideNumber(int number) {
+        this.presentation.setCurrentSlideNumber(number);
+        this.update(presentation, this.presentation.getCurrentSlide());
+    }
+
+    public void prevSlide() {
+        if (presentation.getSlideNumber() > 0) {
+            this.setSlideNumber(presentation.getSlideNumber() - 1);
+        }
+    }
+
+    public void nextSlide() {
+        if (presentation.getSlideNumber() < presentation.getSize() - 1) {
+            this.setSlideNumber(presentation.getSlideNumber() + 1);
+        }
+    }
+
+
+    public Presentation getPresentation() {
+        return this.presentation;
+    }
+
+
+    void clear() {
+        slide = null;
+        repaint();
+    }
+
 
     //Draw the slide
     public void paintComponent(Graphics g) {
@@ -67,8 +95,8 @@ public class SlideViewerComponent extends JComponent implements FontBuilder{
     }
 
     @Override
-    public CustomFont createFont(Color color , String fontName, int fontStyle, int fontSize) {
+    public CustomFont createFont(Color color, String fontName, int fontStyle, int fontSize) {
         customfont = new CustomFont(color, fontName, fontStyle, fontSize);
-        return  customfont;
+        return customfont;
     }
 }

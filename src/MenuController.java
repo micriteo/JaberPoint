@@ -24,9 +24,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MenuController extends MenuBar {
 
     private Frame parent; //The frame, only used as parent for the Dialogs
-    private Presentation presentation; //Commands are given to the presentation
+    private SlideViewerComponent slideViwerComponent;
 
     private static final long serialVersionUID = 227L;
+
+    protected static final String TESTFILE = "testPresentation.xml";
+    protected static final String SAVEFILE = "savedPresentation.xml";
 
     protected static final String ABOUT = "About";
     protected static final String FILE = "File";
@@ -44,58 +47,29 @@ public class MenuController extends MenuBar {
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
 
-    public MenuController(Frame frame, Presentation presentation) {
+    public MenuController(Frame frame, SlideViewerComponent slideViewerComponent) {
         this.parent = frame;
-        this.presentation = presentation;
+        this.slideViwerComponent = slideViewerComponent;
         MenuItem menuItem;
         Menu fileMenu = new Menu(FILE);
         fileMenu.add(menuItem = mkMenuItem(OPEN));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                presentation.clear();
-                // Selecting a file
-                JFileChooser fileChooser = new JFileChooser();
-                // Set the current directory to the current directory
-                fileChooser.setCurrentDirectory(new File("."));
-                // Only show xml files
-                // Create a filter for xml files
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Xml files", "xml");
-                // Set the filter
-                fileChooser.setFileFilter(filter);
-                // Show the file chooser
-
-                int response = fileChooser.showOpenDialog(null);
-
-                // If the user selects a file
-                if (response == JFileChooser.APPROVE_OPTION) {
-                    // Get the selected file
-                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                    // Create a new XMLAccessor
-                    try (Scanner ignored = new Scanner(file)) {
-                        if (file.isFile()) {
-                            try {
-                                // Load the file
-                                Accessor xmlAccessor = new XMLAccessor();
-                                xmlAccessor.loadFile(presentation, file.getAbsolutePath());
-                                // Set the slide number to 0
-                                presentation.setSlideNumber(0);
-                            } catch (IOException exc) {
-                                JOptionPane.showMessageDialog(parent, IOEX + exc,
-                                        LOADERR, JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-                parent.repaint();
+        menuItem.addActionListener(actionEvent -> {
+            slideViewerComponent.clear();
+            Accessor xmlAccessor = new XMLAccessor();
+            try {
+                xmlAccessor.loadFile(slideViewerComponent.getPresentation(), TESTFILE);
+                slideViwerComponent.setSlideNumber(0);
+            } catch (IOException exc) {
+                JOptionPane.showMessageDialog(parent, IOEX + exc,
+                        LOADERR, JOptionPane.ERROR_MESSAGE);
             }
+            parent.repaint();
         });
 
 
         fileMenu.add(menuItem = mkMenuItem(NEW));
         menuItem.addActionListener(actionEvent -> {
-            presentation.clear();
+            slideViwerComponent.clear();
             parent.repaint();
         });
         fileMenu.add(menuItem = mkMenuItem(SAVE));
@@ -109,7 +83,7 @@ public class MenuController extends MenuBar {
             if (userInput != null && !userInput.isEmpty()) {
                 try {
                     // Save the file
-                    xmlAccessor.saveFile(presentation, userInput + ".xml");
+                    xmlAccessor.saveFile(slideViewerComponent.getPresentation(), userInput + ".xml");
                 } catch (IOException exc) {
                     JOptionPane.showMessageDialog(parent, IOEX + exc,
                             SAVEERR, JOptionPane.ERROR_MESSAGE);
@@ -120,19 +94,19 @@ public class MenuController extends MenuBar {
         });
         fileMenu.addSeparator();
         fileMenu.add(menuItem = mkMenuItem(EXIT));
-        menuItem.addActionListener(actionEvent -> presentation.exit(0));
+        menuItem.addActionListener(actionEvent -> slideViwerComponent.getPresentation().exit(0));
         add(fileMenu);
         Menu viewMenu = new Menu(VIEW);
         viewMenu.add(menuItem = mkMenuItem(NEXT));
-        menuItem.addActionListener(actionEvent -> presentation.nextSlide());
+        menuItem.addActionListener(actionEvent -> slideViewerComponent.nextSlide());
         viewMenu.add(menuItem = mkMenuItem(PREV));
-        menuItem.addActionListener(actionEvent -> presentation.prevSlide());
+        menuItem.addActionListener(actionEvent -> slideViewerComponent.prevSlide());
         viewMenu.add(menuItem = mkMenuItem(GOTO));
         menuItem.addActionListener(actionEvent -> {
             String pageNumberStr = JOptionPane.showInputDialog((Object) PAGENR);
             int pageNumber = Integer.parseInt(pageNumberStr);
-            if (pageNumber > 0 && pageNumber <= presentation.getSize()) {
-                presentation.setSlideNumber(pageNumber - 1);
+            if (pageNumber > 0 && pageNumber <= slideViwerComponent.getPresentation().getSize()) {
+                slideViwerComponent.setSlideNumber(pageNumber - 1);
             } else {
                 JOptionPane.showMessageDialog(parent, "Page number out of range",
                         "Error", JOptionPane.ERROR_MESSAGE);
