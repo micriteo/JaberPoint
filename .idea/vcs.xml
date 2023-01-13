@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Jabberpoint_Sourcecode_Students" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/JaberPoint-SourceCode" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/JaberPoint-SourceCode-Refactor" vcs="Git" />
   </component>
 </project>
